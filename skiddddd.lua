@@ -1017,6 +1017,7 @@ local function applyRemoveFog(st)
     end
 end
 -- ===== HSX ADDITIONS: HELPERS =====
+do
 local function _xd_notify(t,d,dur)
     pcall(function() WindUI:Notify({Title=tostring(t),Content=tostring(d or ""),Duration=tonumber(dur) or 3}) end)
 end
@@ -1081,8 +1082,6 @@ local function _xd_isGuard(p)
     end)
     return f
 end
--- ===== HSX ADDITIONS: NEW FUNCTIONS =====
--- Lights Out
 S.LightsOutSafe={Enabled=false,SavedCFrame=nil}
 function S.toggle_lights_out_safezone(arg)
     local enabled=arg and true or false
@@ -1110,7 +1109,6 @@ function S.toggle_vampire_vision(arg)
         nv.Brightness=0.16 nv.Contrast=0.06 nv.Saturation=-0.08 nv.TintColor=Color3.fromRGB(255,236,236)
     elseif nv then nv:Destroy() end
 end
--- Hide and Seek
 function S.teleport_to_spawn()
     local c=_xd_getChar() if not c then return end
     local hrp=_xd_getHRP(c) if not hrp then return end
@@ -1335,8 +1333,6 @@ function S.toggle_spikes_kill(arg)
     end)
     F.Enabled=true fn4()
 end
--- Auto Dodge: STRICT ALWAYS ON, replace HollyMode toggle
--- Jump Rope
 S.JumpRopeAntiFall={Enabled=false,Platform=nil,Conn=nil}
 function S.toggle_jump_rope_anti_fall(enabled)
     if enabled then if not _xd_canEnable("JumpRope","JumpRope") then return end end
@@ -1491,7 +1487,6 @@ function S.jr_delete_rope()
 end
 function S.jr_tp_start() if not _xd_canEnable("JumpRope","JumpRope") then return end _xd_safeTP(Vector3.new(615.2844,192.27428,920.9525)) _xd_notify("JumpRope","TP Start",0.9) end
 function S.jr_tp_end() if not _xd_canEnable("JumpRope","JumpRope") then return end _xd_safeTP(Vector3.new(720.89606,198.62831,921.17065)) _xd_notify("JumpRope","TP End",0.9) end
--- Tug of War
 S.TugOfWarAutoQTEMiss=false S.TugOfWarAutoQTEMissConnection=nil
 local function _findCircleBase()
     local pg=LP:FindFirstChild("PlayerGui") if not pg then return nil end
@@ -1570,7 +1565,6 @@ function S.toggle_tug_auto_pull_op(arg)
     end)
     return true
 end
--- Glass Bridge
 function S.gb_tp_end()
     if _xd_isGameActive("GlassBridge") then _xd_safeTP(Vector3.new(-196.37247,522.19214,-1534.2098)) _xd_notify("GlassBridge","TP End",0.9)
     else _xd_notify("GlassBridge","Wait for GlassBridge!",0.9) end
@@ -1600,7 +1594,6 @@ function S.toggle_anti_break(arg)
         end)
     end
 end
--- Mingle
 S.MingleVoidKillEnabled=false S.MingleConns={}
 function S.toggle_mingle_void_kill(on)
     if on and not _xd_isGameActive("Mingle") then _xd_notify("Mingle Void Kill","Wait for Mingle!",0.9) return end
@@ -1638,7 +1631,6 @@ function S.toggle_mingle_void_kill(on)
     end
     return true
 end
--- SkySquid
 S.AutoRespawnOnFall={Enabled=false,Connection=nil,FallHeight=950,TeleportPosition=Vector3.new(0,966,-6),HasTeleported=false}
 function S.toggle_auto_respawn_on_fall(enabled)
     if enabled and not _xd_isGameActive("SkySquidGame") then _xd_notify("Auto Respawn","Wait for SkySquidGame!",0.9) return end
@@ -1799,7 +1791,6 @@ function S.toggle_orbit_killaura(arg)
     end)
     return true
 end
--- Pentathlon
 S.PentathlonThreads={} S.PentathlonConns={}
 local function _findPenInstance()
     local c=LP.Character if not c then return nil end
@@ -1987,7 +1978,6 @@ function S.toggle_auto_jegi(on)
         end)
     end
 end
--- Dalgona additions
 S.DalgonaAutoRelax=false S.DalgonaAutoRelaxConnection=nil S.DalgonaLastRelax=0
 function S.toggle_dalgona_auto_relax(on)
     S.DalgonaAutoRelax=on
@@ -2030,7 +2020,6 @@ function S.toggle_anti_crack() S.AntiCrack() return true end
 function S.dalgona_lighter()
     if _xd_isGameActive("Dalgona") then LP:SetAttribute("HasLighter",true) else _xd_notify("Dalgona","Wait for Dalgona!",0.9) end
 end
--- Power ESP
 S.ESPPowersEnabled=false S.ESPPowersDrawings={} S.ESPPowersConnection=nil
 C.PowerESPColor=Color3.fromRGB(255,255,255) C.PowerESPFont=2 C.PowerESPSize=16
 function S.clear_esp_powers()
@@ -2081,7 +2070,6 @@ function S.toggle_esp_powers(arg)
     end)
     return true
 end
--- HnS ESP (chase game ESP: seekers red, hiders green, guards yellow)
 S.HNSEspEnabled=false S.HNSEspDrawings={} S.HNSEspConn=nil
 C.HNSSafeColor=Color3.fromRGB(0,255,0) C.HNSSeekerColor=Color3.fromRGB(255,0,0) C.HNSGuardColor=Color3.fromRGB(255,255,0) C.HNSTracerColor=Color3.fromRGB(0,255,0)
 function S.clearHNSEsp()
@@ -2151,7 +2139,6 @@ function S.toggle_hns_esp(on)
         end
     end)
 end
--- Extra additions
 S.CustomGravityEnabled=false S.CustomGravityValue=196.2 S.CustomGravityConn=nil
 function S.toggle_custom_gravity(on)
     S.CustomGravityEnabled=on
@@ -2344,7 +2331,6 @@ function S.toggle_fly(on)
     end
     return true
 end
--- Rebel additions
 S.AutoBecomeGuardEnabled=false S.AutoBecomeGuardTier="Circle" S.AutoBecomeGuardTask=nil
 S.set_guard_tier=function(a)
     local t=tostring(a or "Circle")
@@ -2407,6 +2393,7 @@ do
         if not S.AutoBecomeGuardEnabled then return end
         S.AutoBecomeGuardTask=task.spawn(function() while S.AutoBecomeGuardEnabled do if not LP:GetAttribute("IsGuard") then doOnce() task.wait(0.12) continue end break end end)
     end
+end
 end
 -- ===== BULLET TRACER =====
 local btFadeStyles={ {name="Quad",style=Enum.EasingStyle.Quad},{name="Linear",style=Enum.EasingStyle.Linear},{name="Expo",style=Enum.EasingStyle.Exponential},{name="Back",style=Enum.EasingStyle.Back},{name="Circ",style=Enum.EasingStyle.Circular},{name="Sine",style=Enum.EasingStyle.Sine},{name="Quint",style=Enum.EasingStyle.Quint},{name="Bounce",style=Enum.EasingStyle.Bounce},{name="Elastic",style=Enum.EasingStyle.Elastic} }
@@ -2931,6 +2918,7 @@ local function setOneClickDalgona(v)
     end)
 end
 -- ===== LIMB REMOVE =====
+do
 local function rebuildLimbCache()
     table.clear(S.handCache) table.clear(S.legCache) table.clear(S.torsoCache)
     local char=LP.Character if not char then return end
@@ -2979,7 +2967,14 @@ local function ensureHandsLoop()
     end)
     table.insert(S.conns,S.handsConn)
 end
+S.applyRemoveHands=applyRemoveHands
+S.applyRemoveLegs=applyRemoveLegs
+S.applyRemoveTorso=applyRemoveTorso
+S.rebuildLimbCache=rebuildLimbCache
+S.ensureHandsLoop=ensureHandsLoop
+end
 -- ===== MORPH =====
+do
 local MORPH_KRB_R15_MESH="rbxassetid://902942096"
 local MORPH_KRB_R15_TEXTURE="rbxassetid://902843398"
 local MORPH_KRB_R6_MESH="rbxassetid://101851696"
@@ -3088,6 +3083,17 @@ local function morphRemoveHeadless(char)
 end
 local function applyKorblox(st) local char=LP.Character if not char then return end if st then morphApplyKorblox(char) else morphRemoveKorblox(char) end end
 local function applyHeadless(st) local char=LP.Character if not char then return end if st then morphApplyHeadless(char) else morphRemoveHeadless(char) end end
+S.applyKorblox=applyKorblox
+S.applyHeadless=applyHeadless
+S.morphCheckRate=morphCheckRate
+S.morphGetCachedUserId=morphGetCachedUserId
+S.morphApplyKorblox=morphApplyKorblox
+S.morphApplyHeadless=morphApplyHeadless
+S.morphRemoveKorblox=morphRemoveKorblox
+S.morphRemoveHeadless=morphRemoveHeadless
+S.morphMarkRate=morphMarkRate
+S.MORPH_DEFAULT_FACE=MORPH_DEFAULT_FACE
+end
 -- ===== HIDE NICK =====
 local function isNickName(n)
     local cached=S.nickNameCache[n] if cached~=nil then return cached end
@@ -3199,6 +3205,7 @@ RunService.RenderStepped:Connect(function()
         end end
     end
 end)
+S.refreshNicks=refreshNicks
 -- ===== NOCLIP + INF JUMP =====
 local _noclipActive=false _noclipDisabled={} _noclipFloorParts=setmetatable({},{__mode="k"})
 local _noclipLastSafePos=nil _noclipLastSafeUpdate=0 _noclipFrame=0
@@ -3284,6 +3291,7 @@ track(UIS.JumpRequest:Connect(function()
     if hum then hum:ChangeState(Enum.HumanoidStateType.Jumping) end
 end))
 -- ===== CONFIG =====
+do
 local CONFIG_FOLDER="XionixConfig"
 local AUTOLOAD_FILE=CONFIG_FOLDER.."/_autoload.txt"
 local function ensureFolder()
@@ -3352,6 +3360,18 @@ local function listConfigs()
     table.sort(list) return list
 end
 local function deleteConfig(name) if not S.FILE.delfile then return false end return pcall(S.FILE.delfile,configPath(name)) end
+S.loadConfig=loadConfig
+S.saveConfig=saveConfig
+S.saveAutoloadName=saveAutoloadName
+S.loadAutoloadName=loadAutoloadName
+S.clearAutoloadName=clearAutoloadName
+S.listConfigs=listConfigs
+S.deleteConfig=deleteConfig
+S.packStore=packStore
+S.unpackStore=unpackStore
+S.applyData=applyData
+S.configPath=configPath
+end
 -- ===== TOGGLE WRAPPER =====
 local _polls={}
 local function T(tab,cfg,setter)
@@ -3381,7 +3401,6 @@ local Window=WindUI:CreateWindow({
     Theme="Dark",
     User={Enabled=true,Anonymous=true},
 })
--- ===== MENU TOGGLE (FIXED) =====
 pcall(function() Window:SetToggleKey(nil) end)
 local _menuOpen=true
 local _lastMenuToggle=0
@@ -3464,11 +3483,11 @@ local morphNick=""
 TabExtra:Input({Title="Nickname",Value="",Placeholder="type nick",Callback=function(v) morphNick=v or "" end})
 TabExtra:Button({Title="Morph",Icon="user-check",Callback=function()
     if morphNick=="" then return end
-    if not morphCheckRate(morphNick) then return end
+    if not S.morphCheckRate(morphNick) then return end
     S.morph._busy=true
     task.spawn(function()
         task.wait(0.4)
-        local uid=morphGetCachedUserId(morphNick) if not uid then S.morph._busy=false return end
+        local uid=S.morphGetCachedUserId(morphNick) if not uid then S.morph._busy=false return end
         local ok2,desc=pcall(function() return Players:GetHumanoidDescriptionFromUserIdAsync(uid) end) if not ok2 or not desc then S.morph._busy=false return end
         local bcColors,shirt,pants,graphic={},0,0,0 local faceId=0
         pcall(function() bcColors.head=desc.HeadColor end) pcall(function() bcColors.torso=desc.TorsoColor end)
@@ -3498,40 +3517,39 @@ TabExtra:Button({Title="Morph",Icon="user-check",Callback=function()
         if head then
             for _,c in ipairs(head:GetChildren()) do if c:IsA("Decal") and c.Name=="face" then c:Destroy() end end
             local fd=Instance.new("Decal") fd.Name="face" fd.Face=Enum.NormalId.Front
-            fd.Texture=faceId>0 and ("rbxassetid://"..faceId) or MORPH_DEFAULT_FACE fd.Parent=head
+            fd.Texture=faceId>0 and ("rbxassetid://"..faceId) or S.MORPH_DEFAULT_FACE fd.Parent=head
         end
         S.morph.activeKorblox=S.morph.korbloxManual or false
-        if S.morph.activeKorblox then pcall(function() morphApplyKorblox(oldChar) end) end
+        if S.morph.activeKorblox then pcall(function() S.morphApplyKorblox(oldChar) end) end
         S.morph.activeHeadless=S.morph.headlessManual or false
-        if S.morph.activeHeadless then pcall(function() morphApplyHeadless(oldChar) end) end
-        morphMarkRate(morphNick) S.morph._busy=false
+        if S.morph.activeHeadless then pcall(function() S.morphApplyHeadless(oldChar) end) end
+        S.morphMarkRate(morphNick) S.morph._busy=false
     end)
 end})
 TabExtra:Button({Title="Reset to my skin",Icon="rotate-ccw",Callback=function()
     S.morph.activeKorblox=false S.morph.activeHeadless=false S.morph.korbloxManual=false S.morph.headlessManual=false
-    local char=LP.Character if char then pcall(function() morphRemoveKorblox(char) end) pcall(function() morphRemoveHeadless(char) end) end
+    local char=LP.Character if char then pcall(function() S.morphRemoveKorblox(char) end) pcall(function() S.morphRemoveHeadless(char) end) end
 end})
 TabExtra:Section({Title="Cosmetics"})
-T(TabExtra,{Title="Headless",Default=false},function(v) S.morph.headlessManual=v S.morph.activeHeadless=v if LP.Character then applyHeadless(v) end end)
-T(TabExtra,{Title="Korblox Right Leg",Default=false},function(v) S.morph.korbloxManual=v S.morph.activeKorblox=v if LP.Character then applyKorblox(v) end end)
+T(TabExtra,{Title="Headless",Default=false},function(v) S.morph.headlessManual=v S.morph.activeHeadless=v if LP.Character then S.applyHeadless(v) end end)
+T(TabExtra,{Title="Korblox Right Leg",Default=false},function(v) S.morph.korbloxManual=v S.morph.activeKorblox=v if LP.Character then S.applyKorblox(v) end end)
 TabExtra:Section({Title="Instant Interact"})
 T(TabExtra,{Title="Enable Instant Interact",Desc="Auto-fire all proximity prompts",Default=false},function(v) C.InstantInteract=v end)
 TabExtra:Section({Title="Hide Overhead"})
-T(TabExtra,{Title="Hide my nickname",Default=false},function(v) C.HideNick=v refreshNicks() end)
-T(TabExtra,{Title="Hide other players names",Default=false},function(v) C.HideOtherNames=v refreshNicks() end)
+T(TabExtra,{Title="Hide my nickname",Default=false},function(v) C.HideNick=v S.refreshNicks() end)
+T(TabExtra,{Title="Hide other players names",Default=false},function(v) C.HideOtherNames=v S.refreshNicks() end)
 TabExtra:Section({Title="Visual"})
 T(TabExtra,{Title="Full Bright",Default=false},function(v) applyFullBright(v) end)
 TabExtra:Slider({Title="FullBright intensity",Step=0.05,Value={Min=0.1,Max=3.0,Default=0.3},Callback=function(v) C.FullBrightIntensity=v if S.fbInst then S.fbInst.Brightness=v end end})
 T(TabExtra,{Title="Remove Fog",Default=false},function(v) applyRemoveFog(v) end)
 TabExtra:Section({Title="Remove Parts (client)"})
-T(TabExtra,{Title="Remove Legs",Default=false},function(v) applyRemoveLegs(v) ensureHandsLoop() end)
-T(TabExtra,{Title="Remove Hands",Default=false},function(v) applyRemoveHands(v) ensureHandsLoop() rebuildLimbCache() end)
-T(TabExtra,{Title="Remove Torso",Default=false},function(v) applyRemoveTorso(v) ensureHandsLoop() rebuildLimbCache() end)
+T(TabExtra,{Title="Remove Legs",Default=false},function(v) S.applyRemoveLegs(v) S.ensureHandsLoop() end)
+T(TabExtra,{Title="Remove Hands",Default=false},function(v) S.applyRemoveHands(v) S.ensureHandsLoop() S.rebuildLimbCache() end)
+T(TabExtra,{Title="Remove Torso",Default=false},function(v) S.applyRemoveTorso(v) S.ensureHandsLoop() S.rebuildLimbCache() end)
 TabExtra:Section({Title="Extra"})
 TabExtra:Button({Title="Open Infinite Yield",Icon="terminal",Callback=function() if not loadstring or not game.HttpGet then return end pcall(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Infinite-Yield-95978"))() end) end})
 TabExtra:Button({Title="Force Open Menu",Icon="maximize",Callback=function() pcall(function() Window:Open() end) _menuOpen=true end})
 TabExtra:Button({Title="FULL UNLOAD",Icon="trash-2",Callback=function() if S.doFullUnload then pcall(S.doFullUnload) end end})
--- HnS TAB (Strict toggle REMOVED - strict is always ON)
 local TabHnS=Window:Tab({Title="HnS",Icon="users"})
 TabHnS:Section({Title="HnS Dodge"})
 T(TabHnS,{Title="HnS Dodge",Desc="Strict mode always on - only dodges real hit animations",Default=false},function(v) H.Enabled=v syncHooks() end)
@@ -3543,12 +3561,10 @@ T(TabHnS,{Title="Show radius",Default=false},function(v) H.RadiusVis=v makeViz()
 TabHnS:Colorpicker({Title="HnS Radius Color",Default=hnsRadiusColor(),Callback=function(col) H.RadiusR=math.floor(col.R*255+0.5) H.RadiusG=math.floor(col.G*255+0.5) H.RadiusB=math.floor(col.B*255+0.5) end})
 TabHnS:Section({Title="Slot"})
 TabHnS:Input({Title="HnS Slot",Value="",Placeholder="auto = empty",Callback=function(v) C.ManualHnSSlot=string.upper(v or "") end})
--- Lights Out Tab (NEW)
 local TabLO=Window:Tab({Title="Lights Out",Icon="moon"})
 TabLO:Section({Title="Lights Out"})
 T(TabLO,{Title="Safezone TP",Desc="TP to safe; disable returns you",Default=false},function(v) S.toggle_lights_out_safezone(v) end)
 T(TabLO,{Title="Vampire Lightning",Desc="Night vision color correction",Default=false},function(v) S.toggle_vampire_vision(v) end)
--- Hide and Seek Tab (NEW)
 local TabHNS2=Window:Tab({Title="Hide and Seek",Icon="eye-off"})
 TabHNS2:Section({Title="Teleports"})
 TabHNS2:Button({Title="TP to Spawn",Callback=function() S.teleport_to_spawn() end})
@@ -3561,7 +3577,6 @@ T(TabHNS2,{Title="ESP Spikes",Default=false},function(v) S.toggle_spikes_esp(v) 
 TabHNS2:Section({Title="Utilities"})
 T(TabHNS2,{Title="Spikes Kill",Default=false},function(v) S.toggle_spikes_kill(v) end)
 T(TabHNS2,{Title="Anti-Spikes",Default=false},function(v) S.toggle_anti_spikes(v) end)
--- Jump Rope Tab (NEW)
 local TabJR=Window:Tab({Title="Jump Rope",Icon="activity"})
 TabJR:Section({Title="Jump Rope"})
 T(TabJR,{Title="Anti Fall",Default=false},function(v) S.toggle_jump_rope_anti_fall(v) end)
@@ -3572,21 +3587,17 @@ TabJR:Button({Title="Remove Balance Mini Game",Callback=function() S.remove_bala
 TabJR:Button({Title="Remove Rope",Callback=function() S.jr_delete_rope() end})
 TabJR:Button({Title="TP to Start",Callback=function() S.jr_tp_start() end})
 TabJR:Button({Title="TP to End",Callback=function() S.jr_tp_end() end})
--- Tug of War Tab (NEW)
 local TabTug=Window:Tab({Title="Tug of War",Icon="swords"})
 TabTug:Section({Title="Tug of War"})
 T(TabTug,{Title="Anti Miss QTE",Default=false},function(v) S.toggle_tug_of_war_auto_qte_miss(v) end)
 T(TabTug,{Title="Auto Pull (OP)",Default=false},function(v) S.toggle_tug_auto_pull_op(v) end)
--- Glass Bridge Tab (NEW)
 local TabGB=Window:Tab({Title="Glass Bridge",Icon="layers"})
 TabGB:Section({Title="Utilities"})
 TabGB:Button({Title="TP to End",Callback=function() S.gb_tp_end() end})
 T(TabGB,{Title="AntiBreak Glass",Default=false},function(v) S.toggle_anti_break(v) end)
--- Mingle Tab (NEW)
 local TabM=Window:Tab({Title="Mingle",Icon="users"})
 TabM:Section({Title="Mingle"})
 T(TabM,{Title="Void Kill",Default=false},function(v) S.toggle_mingle_void_kill(v) end)
--- SkySquid Tab (NEW)
 local TabSS=Window:Tab({Title="SkySquid / Squid",Icon="cloud"})
 TabSS:Section({Title="SkySquid"})
 T(TabSS,{Title="Auto TP on Fall",Default=false},function(v) S.toggle_auto_respawn_on_fall(v) end)
@@ -3597,7 +3608,6 @@ T(TabSS,{Title="Enable Orbit",Default=false},function(v) S.toggle_orbit_killaura
 TabSS:Slider({Title="Orbit Radius",Step=1,Value={Min=1,Max=10,Default=3},Callback=function(v) S.OrbitRadius=math.clamp(tonumber(v) or 3,1,10) end})
 TabSS:Slider({Title="Orbit Speed",Step=1,Value={Min=1,Max=10,Default=10},Callback=function(v) S.OrbitSpeed=math.clamp(tonumber(v) or 10,1,10) end})
 T(TabSS,{Title="Orbit AntiHit",Default=false},function(v) S.OrbitAntiHitEnabled=v end)
--- Pentathlon Tab (NEW)
 local TabPen=Window:Tab({Title="Pentathlon",Icon="trophy"})
 TabPen:Section({Title="Auto Minigames"})
 T(TabPen,{Title="Auto Ddakji",Default=false},function(v) S.toggle_auto_ddakji(v) end)
@@ -3605,7 +3615,6 @@ T(TabPen,{Title="Auto Flying Stone",Default=false},function(v) S.toggle_auto_fly
 T(TabPen,{Title="Auto Gonggi",Default=false},function(v) S.toggle_auto_gonggi(v) end)
 T(TabPen,{Title="Auto Spinning Top",Default=false},function(v) S.toggle_auto_spinning_top(v) end)
 T(TabPen,{Title="Auto Jegi",Default=false},function(v) S.toggle_auto_jegi(v) end)
--- Rebel Tab
 local TabRebel=Window:Tab({Title="Rebel",Icon="crosshair"})
 TabRebel:Section({Title="Auto Become Guard"})
 T(TabRebel,{Title="Auto Become Guard",Default=false},function(v) S.toggle_auto_become_guard(v) end)
@@ -3688,7 +3697,6 @@ TabRebel:Section({Title="Auto Brew"})
 T(TabRebel,{Title="Auto brew + collect",Default=false},function(v) C.AutoBrew=v if v then startBrewLoop() else stopBrewLoop() end end)
 TabRebel:Input({Title="Brew key",Value="E",Placeholder="E",Callback=function(v) local u=string.upper(v or "E") if u=="" then u="E" end C.AutoBrewSlot=u end})
 TabRebel:Slider({Title="Cycle cooldown (s)",Step=0.5,Value={Min=0.5,Max=30,Default=1},Callback=function(v) C.AutoBrewInterval=v end})
--- Halloween Tab
 local TabHallow=Window:Tab({Title="Halloween",Icon="ghost"})
 TabHallow:Section({Title="Cryptid ESP"})
 TabHallow:Paragraph({Title="Scans for objects with 'cryptid' in name."})
@@ -3719,7 +3727,6 @@ T(TabHallow,{Title="Rainbow Text",Default=false},function(v) C.Halloween_Rainbow
 TabHallow:Section({Title="Actions"})
 TabHallow:Button({Title="Force Rescan",Icon="refresh-cw",Callback=function() _hlwClear() task.wait(0.1) _hlwScan() end})
 TabHallow:Button({Title="Clear All Cryptid ESP",Icon="x",Callback=function() _hlwClear() end})
--- ESP Tab
 local TabESP=Window:Tab({Title="ESP",Icon="eye"})
 TabESP:Paragraph({Title="Guard ESP shows guards only. Player ESP shows regular players."})
 TabESP:Section({Title="Guard ESP"})
@@ -3765,13 +3772,11 @@ TabESP:Colorpicker({Title="Player Box",Default=playerBoxColor(),Callback=functio
 TabESP:Section({Title="Text"})
 TabESP:Button({Title="Next font (now: "..(ESP_FONT_NAMES[C.ESP_FontIdx or 1] or "GothamBlack")..")",Icon="type",Callback=function() C.ESP_FontIdx=(C.ESP_FontIdx or 1)+1 if C.ESP_FontIdx>#ESP_FONT_NAMES then C.ESP_FontIdx=1 end end})
 TabESP:Button({Title="Reset font",Icon="rotate-ccw",Callback=function() C.ESP_FontIdx=1 end})
--- Power ESP Section (NEW)
 TabESP:Section({Title="Power ESP (NEW)"})
 T(TabESP,{Title="Power ESP",Desc="Show equipped power above head",Default=false},function(v) S.toggle_esp_powers(v) end)
 TabESP:Colorpicker({Title="Power Color",Default=C.PowerESPColor,Callback=function(c) C.PowerESPColor=c end})
 TabESP:Dropdown({Title="Power Font",Values={"UI","System","Plex","Monospace"},Value="Plex",Callback=function(v) C.PowerESPFont=({UI=0,System=1,Plex=2,Monospace=3})[v] or 2 end})
 TabESP:Slider({Title="Power Size",Step=1,Value={Min=10,Max=40,Default=16},Callback=function(v) C.PowerESPSize=v end})
--- HnS ESP Section (NEW)
 TabESP:Section({Title="Hide & Seek ESP (chase game)"})
 TabESP:Paragraph({Title="Seekers=red, Hiders=green, Guards=yellow"})
 T(TabESP,{Title="Enable H&S ESP",Default=false},function(v) S.toggle_hns_esp(v) end)
@@ -3779,24 +3784,21 @@ TabESP:Colorpicker({Title="Hider Color",Default=C.HNSSafeColor,Callback=function
 TabESP:Colorpicker({Title="Seeker Color",Default=C.HNSSeekerColor,Callback=function(c) C.HNSSeekerColor=c end})
 TabESP:Colorpicker({Title="Guard Color",Default=C.HNSGuardColor,Callback=function(c) C.HNSGuardColor=c end})
 TabESP:Colorpicker({Title="Tracer Color",Default=C.HNSTracerColor,Callback=function(c) C.HNSTracerColor=c end})
--- Dalgona Tab
 local TabDalgona=Window:Tab({Title="Dalgona",Icon="cookie"})
 TabDalgona:Section({Title="Cookie"})
 T(TabDalgona,{Title="One Click Complete",Desc="Mouse-guided outline carve",Default=false},function(v) setOneClickDalgona(v) end)
--- Dalgona Additions
 TabDalgona:Button({Title="Anti Crack",Icon="shield",Callback=function() S.toggle_anti_crack() end})
 TabDalgona:Button({Title="Free Lighter",Icon="flame",Callback=function() S.dalgona_lighter() end})
 T(TabDalgona,{Title="Auto Relax Breathing",Desc="Auto-click breath",Default=false},function(v) S.toggle_dalgona_auto_relax(v) end)
--- Configs Tab
 local TabConfigs=Window:Tab({Title="Configs",Icon="save"})
 TabConfigs:Section({Title="Save / Load"})
 local configNameInput="default"
 TabConfigs:Input({Title="Config Name",Value="default",Placeholder="default",Callback=function(v) configNameInput=v or "default" end})
-TabConfigs:Button({Title="Save",Icon="save",Callback=function() saveConfig(configNameInput) end})
-TabConfigs:Button({Title="Load",Icon="folder-open",Callback=function() loadConfig(configNameInput) end})
+TabConfigs:Button({Title="Save",Icon="save",Callback=function() S.saveConfig(configNameInput) end})
+TabConfigs:Button({Title="Load",Icon="folder-open",Callback=function() S.loadConfig(configNameInput) end})
 TabConfigs:Section({Title="Auto-Load"})
-TabConfigs:Button({Title="Set as autoload",Icon="pin",Callback=function() local n=tostring(configNameInput):gsub("[^%w%-%_]","") if n=="" then n="default" end saveAutoloadName(n) end})
-TabConfigs:Button({Title="Reset auto-load",Icon="x",Callback=function() clearAutoloadName() end})
+TabConfigs:Button({Title="Set as autoload",Icon="pin",Callback=function() local n=tostring(configNameInput):gsub("[^%w%-%_]","") if n=="" then n="default" end S.saveAutoloadName(n) end})
+TabConfigs:Button({Title="Reset auto-load",Icon="x",Callback=function() S.clearAutoloadName() end})
 TabConfigs:Section({Title="Menu Key"})
 TabConfigs:Paragraph({Title="Current: "..tostring(C.MenuKey)})
 TabConfigs:Button({Title="Set Menu Key",Icon="keyboard",Callback=function()
@@ -3811,8 +3813,8 @@ TabConfigs:Button({Title="Force Open Menu",Icon="maximize",Callback=function() p
 TabConfigs:Section({Title="Share"})
 local shareBoxText=""
 TabConfigs:Input({Title="Paste JSON to import",Value="",Placeholder="paste here",Callback=function(v) shareBoxText=v or "" end})
-TabConfigs:Button({Title="Export to clipboard",Icon="copy",Callback=function() local pl={C=packStore(C),H=packStore(H),anim=S.animEnabled} local json=HttpService:JSONEncode(pl) if setclipboard then pcall(function() setclipboard(json) end) end end})
-TabConfigs:Button({Title="Import from box",Icon="download",Callback=function() if shareBoxText=="" then return end local ok,data=pcall(function() return HttpService:JSONDecode(shareBoxText) end) if ok and type(data)=="table" then applyData(data) end end})
+TabConfigs:Button({Title="Export to clipboard",Icon="copy",Callback=function() local pl={C=S.packStore(C),H=S.packStore(H),anim=S.animEnabled} local json=HttpService:JSONEncode(pl) if setclipboard then pcall(function() setclipboard(json) end) end end})
+TabConfigs:Button({Title="Import from box",Icon="download",Callback=function() if shareBoxText=="" then return end local ok,data=pcall(function() return HttpService:JSONDecode(shareBoxText) end) if ok and type(data)=="table" then S.applyData(data) end end})
 TabConfigs:Section({Title="Unload"})
 TabConfigs:Button({Title="FULL UNLOAD",Icon="trash-2",Callback=function() if S.doFullUnload then pcall(S.doFullUnload) end end})
 -- ===== UNLOAD =====
@@ -3871,7 +3873,7 @@ _G.__XD_UNLOAD=S.doFullUnload
 task.spawn(function()
     while S.running and not S.unloaded do
         pcall(function()
-            if C.RemoveHands or C.RemoveLegs or C.RemoveTorso then rebuildLimbCache() end
+            if C.RemoveHands or C.RemoveLegs or C.RemoveTorso then S.rebuildLimbCache() end
             if C.Enabled or H.Enabled then
                 S.cachedUITool=findUITool() S.cachedDodgeTool=findDodgeTool()
                 S.cachedSlot=inferSlotFor(S.cachedUITool,"T",C.ManualUISlot)
@@ -3931,21 +3933,21 @@ end
 track(LP.CharacterAdded:Connect(function(char)
     task.wait(0.5)
     if S.unloaded then return end
-    rebuildLimbCache()
-    if C.RemoveHands then applyRemoveHands(true) end
-    if C.RemoveLegs then applyRemoveLegs(true) end
-    if C.RemoveTorso then applyRemoveTorso(true) end
-    if C.Headless then applyHeadless(true) end
-    if C.Korblox then applyKorblox(true) end
+    S.rebuildLimbCache()
+    if C.RemoveHands then S.applyRemoveHands(true) end
+    if C.RemoveLegs then S.applyRemoveLegs(true) end
+    if C.RemoveTorso then S.applyRemoveTorso(true) end
+    if C.Headless then S.applyHeadless(true) end
+    if C.Korblox then S.applyKorblox(true) end
     if C.RebelSilentAim or C.RebelNoRecoil then S.combatHooked=false task.defer(function() pcall(hookCombat) end) end
     if C.Noclip then pcall(_startNoclip) end
     S.aimbotTarget=nil
 end))
-ensureHandsLoop()
+S.ensureHandsLoop()
 do
-    local al=loadAutoloadName()
-    if al~="" then local ok=loadConfig(al) if ok then print("[Xionix] Auto-loaded:",al) end
-    else pcall(function() if S.FILE.isfile and S.FILE.isfile(configPath("default")) then loadConfig("default") end end) end
+    local al=S.loadAutoloadName()
+    if al~="" then local ok=S.loadConfig(al) if ok then print("[Xionix] Auto-loaded:",al) end
+    else pcall(function() if S.FILE.isfile and S.FILE.isfile(S.configPath("default")) then S.loadConfig("default") end end) end
 end
 if getgenv then getgenv().__ui_dodge={shutdown=S.doFullUnload,config=C,H=H} end
 print("[Xionix_Dewamp v 1.2] LOADED (HSX additions, Strict always ON, Menu=N)")
